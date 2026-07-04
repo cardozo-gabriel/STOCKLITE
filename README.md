@@ -1,242 +1,242 @@
 # Stocklite
 
-Stocklite é um aplicativo mobile desenvolvido em Flutter para auxiliar no controle de estoque de produtos de uma despensa, estoque doméstico ou pequeno negócio. A proposta do projeto é oferecer uma experiência simples e visualmente limpa para cadastrar produtos, acompanhar quantidades, identificar itens com estoque baixo, organizar categorias e fornecedores, além de manter tudo sincronizado com Firebase em tempo real.
+Stocklite is a mobile application built with Flutter to help manage inventory for pantry items, household products, or small business stock. The project provides a simple and clean experience for registering products, tracking quantities, identifying low-stock items, organizing categories and suppliers, and keeping everything synchronized with Firebase in real time.
 
-O projeto foi estruturado com uma arquitetura simples baseada em telas, controladores e serviços, separando responsabilidades para facilitar manutenção, expansão e entendimento do fluxo de dados. Ele combina autenticação de usuários, persistência em banco NoSQL (Firestore) e uma interface moderna com Material 3.
+The project is structured with a simple architecture based on screens, controllers, and services, separating responsibilities to make maintenance, expansion, and understanding of the data flow easier. It combines user authentication, NoSQL persistence with Firestore, and a modern interface using Material 3.
 
-## O que o projeto faz
+## What the project does
 
-O aplicativo oferece um fluxo completo de gestão de estoque, incluindo:
+The app offers a complete inventory management flow, including:
 
-- Cadastro, edição e exclusão de produtos.
-- Controle de quantidade disponível em estoque.
-- Definição de quantidade mínima para alertar itens que precisam ser repostos.
-- Cálculo de custo estimado para reposição com base nos produtos abaixo do limite mínimo.
-- Busca por nome de produto.
-- Filtro por categoria.
-- Ordenação de produtos por nome ou preço.
-- Alternância entre visualização em lista e em grade.
-- Gestão de categorias e fornecedores.
-- Identificação visual de produtos com estoque baixo.
-- Busca de nome de produto por código de barras utilizando a API pública OpenFoodFacts.
-- Autenticação de usuários com login, cadastro, recuperação de senha e validação de senha forte.
-- Armazenamento dos dados por usuário, garantindo isolamento dos dados no Firebase.
+- Create, edit, and delete products.
+- Track available stock quantities.
+- Define a minimum quantity to warn when items need restocking.
+- Estimate restocking cost based on products below the minimum threshold.
+- Search products by name.
+- Filter products by category.
+- Sort products by name or price.
+- Switch between list and grid views.
+- Manage categories and suppliers.
+- Visually identify low-stock products.
+- Search product names using barcode input through the public OpenFoodFacts API.
+- Authenticate users with login, signup, password recovery, and strong password validation.
+- Store data per user, ensuring isolation in Firebase.
 
-## O que o projeto é
+## What the project is
 
-Stocklite é um aplicativo de gestão de estoque com foco em usabilidade e simplicidade. Ele foi pensado para quem precisa controlar itens de casa, pequenos estoques de produtos de consumo, produtos vendidos em pequenas rotinas comerciais ou até um estoque básico para uso pessoal.
+Stocklite is an inventory management app focused on usability and simplicity. It was designed for people who need to control household items, small consumer stock, products used in light commercial routines, or a basic personal inventory.
 
-A aplicação não é um ERP completo, mas sim uma solução leve, prática e acessível para operações básicas de controle. O projeto mistura recursos de cadastro, consulta, organização e monitoramento de estoque em um fluxo de tela simples e responsivo.
+The application is not a full ERP, but a lightweight, practical, and accessible solution for basic stock control tasks. It combines product registration, search, organization, and monitoring in a simple and responsive flow.
 
-## Funcionalidades principais
+## Main features
 
-### 1. Autenticação e conta do usuário
+### 1. Authentication and user accounts
 
-A aplicação possui um fluxo completo de autenticação:
+The app includes a complete authentication flow:
 
-- Tela de login com e-mail e senha.
-- Tela de cadastro com nome, telefone, e-mail e senha.
-- Validação de senha com regras fortes: tamanho mínimo, letra maiúscula, letra minúscula, número e caractere especial.
-- Recuperação de senha via envio de e-mail pelo Firebase Auth.
-- Armazenamento de informações adicionais do usuário no Firestore.
+- Login screen with email and password.
+- Signup screen with name, phone, email, and password.
+- Strong password validation: minimum length, uppercase letter, lowercase letter, number, and special character.
+- Password recovery via Firebase Auth email sending.
+- Storage of additional user information in Firestore.
 
-### 2. Gestão de produtos
+### 2. Product management
 
-Na tela principal, o usuário pode:
+On the main screen, the user can:
 
-- Adicionar um novo produto com nome, preço, quantidade, quantidade mínima, categoria e fornecedor.
-- Editar um produto já existente.
-- Excluir um produto com confirmação.
-- Ajustar a quantidade diretamente com botões de + e -.
-- Visualizar se o item está com estoque baixo.
+- Add a new product with name, price, quantity, minimum quantity, category, and supplier.
+- Edit an existing product.
+- Delete a product with confirmation.
+- Adjust the quantity using + and - buttons.
+- See whether an item is low in stock.
 
-### 3. Busca, filtros e organização
+### 3. Search, filters, and organization
 
-A tela de catálogo permite:
+The catalog screen allows:
 
-- Buscar produtos por nome.
-- Filtrar produtos por categoria.
-- Alternar entre lista e grade.
-- Ordenar produtos por nome crescente/decrescente e por preço crescente/decrescente.
+- Search products by name.
+- Filter products by category.
+- Switch between list and grid views.
+- Sort products by name ascending/descending and price ascending/descending.
 
-### 4. Gestão de categorias e fornecedores
+### 4. Category and supplier management
 
-O módulo de resumo permite:
+The summary module allows:
 
-- Criar categorias.
-- Editar categorias.
-- Excluir categorias.
-- Criar fornecedores.
-- Editar fornecedores.
-- Excluir fornecedores.
+- Create categories.
+- Edit categories.
+- Delete categories.
+- Create suppliers.
+- Edit suppliers.
+- Delete suppliers.
 
-Essas informações são usadas para organizar os produtos cadastrados e melhorar a navegação no catálogo.
+This information is used to organize registered products and improve catalog navigation.
 
-### 5. Alertas de reposição
+### 5. Restocking alerts
 
-A tela de resumo mostra:
+The summary screen shows:
 
-- Quantidade total de produtos únicos cadastrados.
-- Custo estimado para repor os itens abaixo do estoque mínimo.
-- Lista de produtos com estoque baixo ou igual ao mínimo.
+- Total number of unique products registered.
+- Estimated cost to restock items below minimum stock.
+- A list of products with low or minimum-level stock.
 
-### 6. Integração com código de barras
+### 6. Barcode integration
 
-Na tela de cadastro de produto, há um campo para código de barras. Ao pesquisar, a aplicação consulta a API do OpenFoodFacts para tentar recuperar o nome do produto automaticamente. Isso facilita a inserção de produtos com base em dados públicos.
+The product registration screen includes a barcode field. When searched, the app queries the OpenFoodFacts API to try to retrieve the product name automatically. This makes product entry faster and easier.
 
-## Estrutura do projeto
+## Project structure
 
-A estrutura principal do projeto está organizada em:
+The main structure of the project is organized as follows:
 
-- lib/main.dart: ponto de entrada da aplicação.
-- lib/modules/auth: telas e controladores de autenticação, cadastro e recuperação de senha.
-- lib/modules/home: telas e controladores da área principal do app, incluindo catálogo, resumo, busca, cadastro e edição de produtos.
-- lib/modules/about: tela de informações sobre o projeto.
-- lib/data/models: modelos de dados como produto, categoria, fornecedor.
-- lib/data/services: serviços para comunicação com Firebase Firestore e lógica de persistência.
-- lib/firebase_options.dart: configuração de conexão com o Firebase para cada plataforma.
+- lib/main.dart: application entry point.
+- lib/modules/auth: authentication, signup, and password recovery screens and controllers.
+- lib/modules/home: main app screens and controllers, including catalog, summary, search, and add/edit product flows.
+- lib/modules/about: project information screen.
+- lib/data/models: data models such as product, category, and supplier.
+- lib/data/services: services for communication with Firebase Firestore and persistence logic.
+- lib/firebase_options.dart: Firebase configuration for each platform.
 
-## Tecnologias e bibliotecas utilizadas
+## Technologies and libraries used
 
-O projeto utiliza principalmente:
+The project mainly uses:
 
-- Flutter e Dart.
-- Material 3 para a interface.
-- Firebase Authentication para autenticação de usuários.
-- Cloud Firestore para armazenamento de dados.
-- Provider para gerenciamento de estado simples.
-- Device Preview para visualização da interface em diferentes tamanhos de tela durante desenvolvimento.
-- intl_phone_number_input para entrada de telefone com máscara e seleção de país.
-- http para integração com a API OpenFoodFacts.
+- Flutter and Dart.
+- Material 3 for the interface.
+- Firebase Authentication for user authentication.
+- Cloud Firestore for data storage.
+- Provider for simple state management.
+- Device Preview for interface preview during development.
+- intl_phone_number_input for phone input with country selection.
+- http for integration with the OpenFoodFacts API.
 
-## Requisitos para rodar o projeto
+## Requirements to run the project
 
-Antes de executar o projeto, você precisará ter instalado:
+Before running the project, you will need:
 
-- Flutter SDK 3.8.1 ou superior.
-- Dart SDK compatível com a versão do Flutter instalada.
-- Android Studio ou VS Code com extensões para Flutter e Dart.
-- Um emulador Android ou um dispositivo Android conectado.
-- Opcionalmente, Xcode para rodar em iOS, se você estiver em macOS.
-- Uma conta no Firebase.
-- Git para clonar o repositório.
+- Flutter SDK 3.8.1 or newer.
+- A Dart SDK compatible with the installed Flutter version.
+- Android Studio or VS Code with Flutter and Dart extensions.
+- An Android emulator or a physical Android device connected.
+- Optionally, Xcode if you want to run on iOS on macOS.
+- A Firebase account.
+- Git to clone the repository.
 
-## Como instalar o Flutter
+## How to install Flutter
 
-Se ainda não tiver o Flutter instalado, siga os passos oficiais:
+If Flutter is not installed yet, follow the official steps:
 
-1. Acesse o site do Flutter.
-2. Baixe a versão estável compatível com o seu sistema operacional.
-3. Extraia o SDK para uma pasta de sua preferência.
-4. Adicione o Flutter ao PATH do sistema.
-5. Execute o comando:
+1. Visit the Flutter website.
+2. Download the stable version compatible with your operating system.
+3. Extract the SDK to a folder of your choice.
+4. Add Flutter to your system PATH.
+5. Run:
 
 ```bash
 flutter doctor
 ```
 
-Esse comando valida se todas as dependências necessárias estão corretas.
+This validates whether all required dependencies are properly configured.
 
-## Como rodar o projeto
+## How to run the project
 
-### 1. Clone o repositório
+### 1. Clone the repository
 
 ```bash
-git clone <url-do-repositorio>
+git clone <repository-url>
 cd STOCKLITE
 ```
 
-### 2. Instale as dependências
+### 2. Install dependencies
 
 ```bash
 flutter pub get
 ```
 
-### 3. Verifique se o ambiente está pronto
+### 3. Check that the environment is ready
 
 ```bash
 flutter doctor
 ```
 
-### 4. Configure o Firebase
+### 4. Configure Firebase
 
-Este projeto já possui um arquivo de configuração de Firebase em [lib/firebase_options.dart](lib/firebase_options.dart), mas é importante garantir que ele corresponda ao seu projeto real no Firebase.
+This project already includes a Firebase configuration file at [lib/firebase_options.dart](lib/firebase_options.dart), but it is important to ensure that it matches your real Firebase project.
 
-Se você estiver usando um projeto Firebase diferente, é recomendável regenerar as opções com o FlutterFire:
+If you are using a different Firebase project, it is recommended to regenerate the options with FlutterFire:
 
 ```bash
 flutterfire configure
 ```
 
-Além disso, certifique-se de que:
+Also make sure that:
 
-- o projeto Firebase esteja criado;
-- o Authentication esteja habilitado com e-mail/senha;
-- o Firestore esteja habilitado;
-- o arquivo google-services.json esteja configurado para Android;
-- o arquivo GoogleService-Info.plist esteja configurado para iOS.
+- the Firebase project exists;
+- Authentication is enabled for email/password;
+- Firestore is enabled;
+- google-services.json is configured for Android;
+- GoogleService-Info.plist is configured for iOS.
 
-### 5. Execute o aplicativo
+### 5. Run the app
 
-Para Android:
+For Android:
 
 ```bash
 flutter run
 ```
 
-Ou para um dispositivo específico:
+Or for a specific device:
 
 ```bash
 flutter run -d <device-id>
 ```
 
-Para web:
+For web:
 
 ```bash
 flutter run -d chrome
 ```
 
-Para um emulador Android já aberto:
+If an Android emulator is already running:
 
 ```bash
 flutter devices
-flutter run -d <emulador>
+flutter run -d <emulator>
 ```
 
-## Estrutura de dados no Firebase
+## Firebase data structure
 
-A aplicação utiliza o Firestore com a seguinte lógica de organização:
+The app uses Firestore with the following organization:
 
-- Coleção usuarios
-  - Documento por usuário autenticado
-  - Subcoleção products: produtos do usuário
-  - Subcoleção categories: categorias do usuário
-  - Subcoleção suppliers: fornecedores do usuário
+- users collection
+  - One document per authenticated user
+  - products subcollection: user products
+  - categories subcollection: user categories
+  - suppliers subcollection: user suppliers
 
-Essa estrutura permite que cada conta tenha seus próprios dados isolados.
+This structure ensures that each account has its own isolated data.
 
-## Observações importantes
+## Important notes
 
-- O projeto usa autenticação real, então um usuário precisa criar uma conta antes de utilizar o app de forma completa.
-- O app depende de uma conexão com o Firebase para criar contas, logar, salvar produtos e sincronizar dados.
-- A integração com a API OpenFoodFacts depende de conexão com a internet e pode não retornar resultados para todos os produtos.
-- Para desenvolvimento, o Device Preview fica ativo em modo não release.
+- The project uses real authentication, so a user must create an account before using the app fully.
+- The app depends on a Firebase connection to create accounts, log in, save products, and synchronize data.
+- The OpenFoodFacts API integration depends on internet access and may not return results for every product.
+- For development, Device Preview is active in non-release mode.
 
-## Comandos úteis
+## Useful commands
 
-Se precisar limpar e reinstalar dependências:
+To clean and reinstall dependencies:
 
 ```bash
 flutter clean
 flutter pub get
 ```
 
-Se quiser validar o projeto após alterações:
+To validate the project after changes:
 
 ```bash
 flutter analyze
 ```
 
-## Resumo em uma frase
+## One-line summary
 
-Stocklite é um aplicativo Flutter para controlar estoque de produtos com autenticação, persistência em Firebase, organização por categorias/fornecedores e alertas de reposição de itens.
+Stocklite is a Flutter app for managing product inventory with authentication, Firebase persistence, category/supplier organization, and low-stock alerts.
